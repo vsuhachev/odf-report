@@ -27,6 +27,9 @@ module ODFReport
       if @block
         @block.call(record)
 
+      elsif @data_field == :self
+        [record.dup]
+
       elsif record.is_a?(Hash)
         key = @data_field
         record[key] || record[key.to_s.downcase] || record[key.to_s.upcase] || record[key.to_s.downcase.to_sym]

@@ -43,7 +43,7 @@ module ODFReport
       yield(tab)
     end
 
-    def add_section(section_name, collection_field, opts = {})
+    def add_section(section_name, collection_field = :self, opts = {})
       opts[:name] = section_name
       opts[:collection_field] = collection_field
 
