@@ -1,5 +1,6 @@
 require './lib/odf-report'
 require 'faker'
+require 'ostruct'
 
 I18n.enforce_available_locales = false
 
