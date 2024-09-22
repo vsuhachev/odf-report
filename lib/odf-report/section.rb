@@ -1,9 +1,19 @@
 module ODFReport
   class Section < Nestable
+    def initialize(opts)
+      super(opts)
+
+      @if = opts[:if]
+      @unless = opts[:unless]
+    end
+
     def replace!(doc)
       return unless find_section_node(doc)
 
       @data_source.each do |record|
+        next if @if && !condition?(record, @if)
+        next if @unless && condition?(record, @unless)
+
         new_section = deep_clone(@section_node)
 
         @tables.each { |t| t.set_source(record).replace!(new_section) }

@@ -62,5 +62,15 @@ module ODFReport
        <root xmlns:draw="a" xmlns:xlink="b" xmlns:text="c" xmlns:table="d">#{node.to_xml}</root>
       XML
     end
+
+    def condition?(record, condition)
+      if condition.nil?
+        false
+      elsif condition.respond_to?(:call)
+        condition.call(record)
+      elsif record.respond_to?(condition)
+        record.public_send(condition)
+      end
+    end
   end
 end
