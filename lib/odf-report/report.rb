@@ -19,8 +19,9 @@ module ODFReport
       @fields << field
     end
 
-    def add_text(field_tag, value = "")
-      opts = {name: field_tag, value: value}
+    def add_text(field_tag, value = "", opts = {})
+      opts[:name] = field_tag
+      opts[:value] = value
       text = Text.new(opts)
       @texts << text
     end

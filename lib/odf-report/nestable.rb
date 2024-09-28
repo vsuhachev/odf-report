@@ -23,8 +23,9 @@ module ODFReport
     end
     alias_method :add_column, :add_field
 
-    def add_text(name, data_field = nil, &block)
-      opts = {name: name, data_field: data_field}
+    def add_text(name, data_field = nil, opts= {}, &block)
+      opts[:name] = name
+      opts[:data_field] = data_field
       @texts << Text.new(opts, &block)
     end
 
