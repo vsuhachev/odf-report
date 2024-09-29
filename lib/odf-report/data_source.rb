@@ -14,7 +14,12 @@ module ODFReport
 
     def each(&block)
       return unless @value
-      @value.each(&block)
+
+      if @value.respond_to?(:call)
+        @value.call.each(&block)
+      else
+        @value.each(&block)
+      end
     end
 
     def empty?
@@ -26,6 +31,9 @@ module ODFReport
     def extract_value_from_item(record)
       if @block
         @block.call(record)
+
+      elsif @data_field.respond_to?(:call)
+        @data_field.call(record)
 
       elsif @data_field == :self
         [record.dup]
@@ -53,10 +61,10 @@ module ODFReport
       tmp = record.dup
       @data_field.each do |f|
         tmp = if f.is_a?(Hash)
-          tmp.send(f.keys[0], f.values[0])
-        else
-          tmp.send(f)
-        end
+                tmp.send(f.keys[0], f.values[0])
+              else
+                tmp.send(f)
+              end
       end
       tmp
     end
